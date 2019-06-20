@@ -37,6 +37,7 @@ class ValidatorProvider extends ServiceProvider
     protected function getMessages()
     {
         return [
+            'brl' => 'Valor de dinheiro real brasileiro inválido',
             'cnh' => 'Carteira Nacional de Habilitação inválida',
             'titulo_eleitor' => 'Título de Eleitor inválido',
             'cnpj' => 'CNPJ inválido',

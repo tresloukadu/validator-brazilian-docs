@@ -61,7 +61,6 @@ class Validator extends BaseValidator
      * @param string $value
      * @return boolean
      */
-
     protected function validateCpf($attribute, $value)
     {
         $c = preg_replace('/\D/', '', $value);
@@ -135,7 +134,6 @@ class Validator extends BaseValidator
      * @param string $value
      * @return boolean
      */
-
     protected function validateCnh($attribute, $value)
     {
         // Trecho retirado do respect validation
@@ -180,7 +178,6 @@ class Validator extends BaseValidator
      * @param string $value
      * @return boolean
      */
-
     protected function validateTituloEleitor($attribute, $value)
     {
 
@@ -242,7 +239,6 @@ class Validator extends BaseValidator
      * @param string $value
      * @return boolean
      */
-
     protected function validateNis($attribute, $value)
     {
         $nis = sprintf('%011s', preg_replace('{\D}', '', $value));
@@ -256,6 +252,28 @@ class Validator extends BaseValidator
         }
 
         return ($nis[10] == (((10 * $d) % 11) % 10));
+    }
+
+    /**
+     * Valida o formato do dinheiro brasileiro
+     * 
+     * @param string $attribute     O nome do atributo
+     * @param string $value         O valor a ser analisado
+     * @param string $parameters    Define se valida com R$ seguido de apenas um espaço e número ou sem
+     * 
+     * @example Sem o prefixo ativado 0,01 ou 1.234.567.890,12
+     * @example Com o prefixo ativado R$ 0,01 ou R$ 1.234.567.890,12 (apenas um espaço entre símbolo e número)
+     * 
+     * @author Carlos Eduardo da Silva <carlosedasilva@gmail.com>
+     * @return boolean
+     */
+    protected function validateBrl($attribute, $value, $parameters = null)
+    {
+        $pattern = ($parameters == 'prefixed') ? 
+                    '/^R\$\s\d{1,3}(?:\.\d{3})*,\d{2}$/' : 
+                    '/^\d{1,3}(?:\.\d{3})*,\d{2}$/';
+        
+        return preg_match($pattern, $value);
     }
 
 }

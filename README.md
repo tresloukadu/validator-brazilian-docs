@@ -32,6 +32,7 @@ geekcom\ValidatorDocs\ValidatorProvider::class
 Para utilizar a validação agora, basta fazer o procedimento padrão do `Laravel`, confira na documentação especifica para a sua versão,
 a diferença é que agora, você terá os seguintes métodos de validação:
 
+* **brl** - Verifica se o valor informado está no formato de reais do Brasil.
 * **cnh** - Verifica se uma CNH é valida. Para testar, basta utilizar o site http://4devs.com.br/gerador_de_cnh
 * **titulo_eleitor** - Verifica se um Título de Eleitor é valido. Para testar, basta utilizar o site http://4devs.com.br/gerador_de_titulo_de_eleitor
 * **cnpj** - Verifica se o CNPJ é valido. Para testar, basta utilizar o site http://www.geradorcnpj.com/
@@ -58,6 +59,56 @@ No exemplo abaixo, fazemos um teste onde validamos a formatação e a validade d
 $this->validate($request, [
           'cpf_or_cnpj' => 'formato_cpf_cnpj|cpf_cnpj',
       ]);
+```
+
+Validando dinheiro:
+
+```php
+$this->validate($request, [
+          'brl' => 'brl',
+      ]);
+```
+
+ou 
+
+```php
+$this->validate($request, [
+          'brl' => 'brl:prefixed',
+      ]);
+```
+
+Textado com os seguintes valores válidos:
+
+```txt
+0,01
+0,12
+1,23
+12,34
+123,45
+1.234,56
+12.235,67
+123.456,78
+1.234.567,89
+12.345.678,90
+123.456.789,01
+1.234.567.890,12
+```
+
+e 
+
+```txt
+R$ 0,01
+R$ 0,12
+R$ 1,23
+R$ 12,34
+R$ 123,45
+R$ 1.234,56
+R$ 12.235,67
+R$ 123.456,78
+R$ 1.234.567,89
+R$ 12.345.678,90
+R$ 123.456.789,01
+R$ 1.234.567.890,12
 ```
 
 Fique a vontade para contribuir fazendo um fork.

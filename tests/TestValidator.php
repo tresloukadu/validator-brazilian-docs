@@ -4,6 +4,23 @@ namespace geekcom\ValidatorDocs\Tests;
 
 final class TestValidator extends ValidatorTestCase
 {
+    public function testBrl()
+    {
+        $correct = \Validator::make(
+            ['certo' => '123.456.789,01'],
+            ['certo' => 'brl']
+        );
+
+        $incorrect = \Validator::make(
+            ['errado' => '1.234'],
+            ['errado' => 'brl']
+        );
+
+        $this->assertTrue($correct->passes());
+
+        $this->assertTrue($incorrect->fails());
+    }
+
     public function testCpf()
     {
         $correct = \Validator::make(
@@ -149,8 +166,8 @@ final class TestValidator extends ValidatorTestCase
     public function testNis()
     {
         $correct = \Validator::make(
-            ['certo' => '201.73374.34-9'],
-            ['certo' => 'nis']
+            ['certo' => '201.73374.34-9'], // data
+            ['certo' => 'nis'] // validation rule
         );
 
         $incorrect = \Validator::make(
